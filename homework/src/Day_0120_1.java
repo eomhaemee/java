@@ -16,8 +16,5 @@ public class Day_0120_1 {
 			}
 			System.out.println();
 		}
-		
-		
-
 	}
 }
