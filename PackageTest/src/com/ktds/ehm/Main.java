@@ -3,7 +3,6 @@ package com.ktds.ehm;
 import com.ktds.ehm.hospital.Doctor;
 
 public class Main {
-
 	public static void main(String[] args){
 		System.out.println("패키지 Test확인");
 		
@@ -13,4 +12,5 @@ public class Main {
 		
 		doctor.hello();
 	}
+
 }
