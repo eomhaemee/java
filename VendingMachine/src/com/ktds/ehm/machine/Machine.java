@@ -63,30 +63,54 @@ public class Machine {
 	public void setSelectedItemName(String selectedItemName) {
 		this.selectedItemName = selectedItemName;
 	}
+	
+	public void sell(Guest guest){
 
-	public void selectAndPrintItem(Guest guest) {
-		System.out.println("0.콜라 1.사이다,2.환타를 구매할 숫자를 선택하세요");
-		Scanner input = new Scanner(System.in);
+		while(true){
+			//메뉴를 보여줌
+			System.out.println("0.콜라 1.사이다,2.환타, 4.종료 구매할 숫자를 선택하세요");
+			//아이템선텍
+			setSelectedItem(guest.selectMenu());
+			
+			if (this.selectedItem == 4) {
+				System.out.println("구매를 종료합니다.");
+				break;
+			}else if (this.products[selectedItem][2] == "0"){
+				System.out.println("수량이 없습니다.");
+			}else if (guest.getMoney()==0) {
+				System.out.println("잔돈이없습니다.");
+			} else {
+				setSelectedItemName(products[selectedItem][0]);
+				setSelectedItemPrice(Integer.parseInt(products[selectedItem][1]));
 
-		setSelectedItem(input.nextInt());
-		setSelectedItemName(products[selectedItem][0]);
-		setSelectedItemPrice(Integer.parseInt(products[selectedItem][1]));
+				System.out.printf("선택한음료는[%s] 금액 [%d원] 입니다.\n", selectedItemName, selectedItemPrice);
+				
+				int cnt = Integer.parseInt(this.products[selectedItem][2]) - 1;
+				this.products[selectedItem][2] = String.valueOf(cnt);
 
-		System.out.printf("선택한음료는[%s] 금액 [%d원] 입니다.\n", selectedItemName, selectedItemPrice);
-
-		sell(selectedItem, selectedItemPrice, guest);
+				this.totMoney += selectedItemPrice;
+				
+				/*
+				System.out.println("---------------------------------");
+				menu = String.format("1. 콜라(%d원) : %d개  |  2. 사이다(%d원) : %d개  |  3. 환타(%d원) : %d개  |  4. 구매 종료", COKE_PRICE, cokeStock,
+						CYDER_PRICE, cyderStock, FANTA_PRICE, fantaStock);
+				System.out.println(menu);
+				System.out.println("---------------------------------");System.out.println("---------------------------------");
+				menu = String.format("1. 콜라(%d원) : %d개  |  2. 사이다(%d원) : %d개  |  3. 환타(%d원) : %d개  |  4. 구매 종료", COKE_PRICE, cokeStock,
+						CYDER_PRICE, cyderStock, FANTA_PRICE, fantaStock);
+				System.out.println(menu);
+				System.out.println("---------------------------------");
+				*/
+				
+				guest.pay(selectedItemPrice);
+			}
+			
+			
+			
+		}
+		
 	}
-
-	public void sell(int selectedItem, int selectedItemPrice, Guest guest) {
-
-		int cnt = Integer.parseInt(this.products[selectedItem][2]) - 1;
-		this.products[selectedItem][2] = String.valueOf(cnt);
-
-		this.totMoney += selectedItemPrice;
-		guest.pay(selectedItemPrice);
-
-	}
-
+	
 	@Override
 	public String toString() {
 		return "[" + selectedItemName + "] 재고수량: " + this.products[selectedItem][2] + ",  판매누적금 >> " + this.totMoney;

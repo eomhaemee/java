@@ -1,5 +1,7 @@
 package com.ktds.ehm.guest;
 
+import java.util.Scanner;
+
 import com.ktds.ehm.machine.Machine;
 
 public class Guest {
@@ -26,9 +28,16 @@ public class Guest {
 	}
 
 	public void buy(Machine machine) {
-		machine.selectAndPrintItem(this);
+		machine.sell(this);
 	}
-
+	//메뉴선택
+	public int selectMenu(){
+		
+		Scanner input = new Scanner(System.in);
+		return input.nextInt();
+	}
+	
+	
 	public void pay(int selectedItemPrice) {
 		this.money -= money;
 		
