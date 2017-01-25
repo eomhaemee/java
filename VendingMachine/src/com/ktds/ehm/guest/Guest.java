@@ -2,43 +2,41 @@ package com.ktds.ehm.guest;
 
 import com.ktds.ehm.machine.Machine;
 
-
 public class Guest {
 	private int money;
-	private int itemNo;
-	
-	/*public Guest(int money, int item){
+	private String itemName;
+
+	public Guest(int money) {
 		this.money = money;
-		this.item = item;
-		System.out.println(this);
-	}*/
-
-
+	}
 	public int getMoney() {
 		return money;
 	}
-
 
 	public void setMoney(int money) {
 		this.money = money;
 	}
 
-	public int getItemNo() {
-		return itemNo;
+	public String getItemName() {
+		return itemName;
 	}
 
-	public void setItemNo(int itemNo) {
-		this.itemNo = itemNo;
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
 	}
 
-	
-	public void buy(int money,int itemNo){
+	public void buy(Machine machine) {
+		machine.selectAndPrintItem(this);
+	}
+
+	public void pay(int selectedItemPrice) {
 		this.money -= money;
+		
 	}
-	
 	@Override
 	public String toString() {
-		return "Guest [money=" + money + ", itemNo=" + itemNo + "]";
+		return "구매자의 잔금 >> " + money;
+
 	}
 
 

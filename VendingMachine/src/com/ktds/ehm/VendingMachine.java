@@ -1,25 +1,22 @@
 package com.ktds.ehm;
 
-import java.util.Scanner;
-
 import com.ktds.ehm.guest.Guest;
+import com.ktds.ehm.machine.Machine;
 
 public class VendingMachine {
-	public void start(){
-		
-		System.out.println("1.콜라,2.사이다,2.환타 숫자를 선택하세요");
-		Scanner input = new Scanner(System.in);
-		
-		int itemNo = input.nextInt();
-		
-		Guest guest = new Guest();
-		guest.buy(100,itemNo);
+	public void start() {
+
+		Guest guest = new Guest(1000);
+		Machine machine = new Machine(20000);
+
+		guest.buy(machine);
+		System.out.println("=================");
 		System.out.println(guest);
-		
-		
+		System.out.println(machine);
+
 	}
-	
-	public static void main(String[] args){
+
+	public static void main(String[] args) {
 		new VendingMachine().start();
 	}
 }
