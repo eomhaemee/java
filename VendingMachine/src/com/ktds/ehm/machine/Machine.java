@@ -1,7 +1,5 @@
 package com.ktds.ehm.machine;
 
-import java.util.Scanner;
-
 import com.ktds.ehm.guest.Guest;
 
 public class Machine {
