@@ -55,48 +55,74 @@ public class StoreOwner {
 		this.storeBalane = storeBalane;
 	}
 
-	public void sell(Guest guest,int guestMoney) {
+	public void sell(Guest guest) {
 
 		String menu = "";
 		int selectedMenu = 0;
 
-		System.out.println("--------------------------------------------------");
-		menu = String.format("김밥천국 메뉴판(메뉴를 숫자로 입력하세요..)\n 1. 김밥(%d원)   |  2. 라면(%d원) |  999. 주문 종료 \n ", KIMBAP_PRICE,
-				RAMEN_PRICE);
+		menu = "===========================================================";
+		menu += "\n	김밥천국 메뉴판[메뉴 NO.입력하세요]";
+		menu += "\n----------------------------------------------------------";
+		menu += String.format("\n	1. 김밥(%d원)   |  2. 라면(%d원) |  999. 주문 종료 \n ", KIMBAP_PRICE, RAMEN_PRICE);
+		menu += "\n===========================================================";
 		System.out.println(menu);
-		System.out.println("--------------------------------------------------");
 
-		
-		while(true){
+		while (true) {
 			selectedMenu = guest.selectMenu();
+			// selectedMenuCount = guest.selectedMenuCount(selectedMenu);
 
 			if (selectedMenu == KIMBAP) {
-				
-				System.out.println("김밥하나요...");
-				kimbapStock++;
-				guestMoney -= KIMBAP_PRICE;
+				if (guest.getGuestMoney() < KIMBAP_PRICE) {
+					System.out.println("김밥을 주문할 잔액이 없군요..ㅜㅜ  잔액을 확인바랍니다.");
+				} else {
+					kimbapStock++;
+					this.storeBalane += KIMBAP_PRICE;
+					guest.remainMoney(KIMBAP_PRICE);
+					guest.takeFood(selectedMenu);
+
+					System.out.println("주문한 김밥: " + kimbapStock);
+				}
 
 			} else if (selectedMenu == RAMEN) {
-				System.out.println("라면하나요...");
-				ramenStock++;
-				guestMoney -= RAMEN_PRICE;
+				if (guest.getGuestMoney() < RAMEN_PRICE) {
+					System.out.println("라면을 주문할 잔액이 없군요..ㅡㅜ 잔액을 확인바랍니다.");
+				} else {
+					ramenStock++;
+					this.storeBalane += RAMEN_PRICE;
+
+					guest.remainMoney(RAMEN_PRICE);
+					guest.takeFood(selectedMenu);
+					System.out.println("주문한 라면: " + ramenStock);
+				}
 
 			} else if (selectedMenu == 999) {
 				System.out.println("주문을 완료합니다.");
-				 break;
+				break;
 
 			} else {
-				System.out.println("메뉴를 다시 선택하세요[1.김밥 2.라면 999.주문끝");
+				System.out.println("메뉴를 다시 선택하세요[1.김밥 | 2.라면  | 999.주문종료]");
 			}
+
+			System.out.println(guest);
 		}
-		
-		
-		
-		
-		
-		
-		//guest.remainMoney(guestMoney);
-		
+
+		// guest.remainMoney(this.clcMoney);
+		// System.out.println(this);
+
+		// this.storeBalane += this.clcMoney;
+
+	}
+
+	@Override
+	public String toString() {
+
+		String message = "===========================================================";
+		message += "\n	주문내역[매장용]";
+		message += "\n----------------------------------------------------------";
+		message += String.format("\n	1. 김밥(%d개)   |  2. 라면(%d개) |  계산 총금액: %d \n ", kimbapStock, ramenStock,
+				storeBalane);
+		message += "\n===========================================================";
+		return message;
 
 	}
 
