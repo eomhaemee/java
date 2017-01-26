@@ -72,15 +72,22 @@ public class TrainReservation {
 	// 좌석변경시작
 	public void chageSeat() {
 		// 좌석현황보여주기
-		showSeatStatus1();
+		showSeatStatus();
+		//showSeatStatus1();
+		
 		// 좌석입력하기
 		enterSeat();
+		
 		// 선택된좌석 보여주기
 		showSelectedSeat();
+		//showSelectedSeat1();
+		
 		// 예매,예매취소 시키기
 		reservationOrCancel();
+		
 		// 좌석현황보여주기
 		showSeatStatus();
+		//showSeatStatus1();
 	}
 
 	// 좌석현황보여주기
@@ -98,7 +105,8 @@ public class TrainReservation {
 		}
 		System.out.println("======================");
 	}
-	//영화관 자리 예매용 seat
+
+	// 영화관 자리 예매용 seat
 	public void showSeatStatus1() {
 		System.out.println("=======[좌석현황]=======");
 		String seatMark1 = "";
@@ -107,7 +115,7 @@ public class TrainReservation {
 
 			for (int j = 0; j < seat[i].length; j++) {
 				seatMark1 = "";
-				//복도자리
+				// 복도자리
 				if (j == 2 || j == 7) {
 					seatMark1 = "  ";
 				}
@@ -181,6 +189,7 @@ public class TrainReservation {
 		System.out.println("=====[선택하신자리]=====");
 		for (int i = 0; i < seat.length; i++) {
 			for (int j = 0; j < seat[i].length; j++) {
+
 				if (i == this.selectedSeatRow && j == this.selectedSeatColumn) {
 					System.out.print(" * ");
 				} else {
@@ -190,6 +199,37 @@ public class TrainReservation {
 						System.out.print(" □ ");
 					}
 				}
+
+			}
+			System.out.println();
+		}
+		System.out.println("======================");
+	}
+
+	// 영화관용 선택한 좌석 보여주기
+	public void showSelectedSeat1() {
+		String seatMark1 = "";
+		String seatMark2 = "";
+
+		System.out.println("=====[선택하신자리]=====");
+		for (int i = 0; i < seat.length; i++) {
+			for (int j = 0; j < seat[i].length; j++) {
+				seatMark1 = "";
+				// 복도자리
+				if (j == 2 || j == 7) {
+					seatMark1 = "  ";
+				} else {
+					if (i == this.selectedSeatRow && j == this.selectedSeatColumn) {
+						System.out.print("*");
+					} else {
+						if (seat[i][j] == 1) {
+							System.out.print("■");
+						} else {
+							System.out.print("□");
+						}
+					}
+				}
+				System.out.print(seatMark1 + seatMark2);
 
 			}
 			System.out.println();
