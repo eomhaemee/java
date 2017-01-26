@@ -72,7 +72,7 @@ public class TrainReservation {
 	// 좌석변경시작
 	public void chageSeat() {
 		// 좌석현황보여주기
-		showSeatStatus();
+		showSeatStatus1();
 		// 좌석입력하기
 		enterSeat();
 		// 선택된좌석 보여주기
@@ -98,6 +98,30 @@ public class TrainReservation {
 		}
 		System.out.println("======================");
 	}
+	//영화관 자리 예매용 seat
+	public void showSeatStatus1() {
+		System.out.println("=======[좌석현황]=======");
+		String seatMark1 = "";
+		String seatMark2 = "";
+		for (int i = 0; i < seat.length; i++) {
+
+			for (int j = 0; j < seat[i].length; j++) {
+				seatMark1 = "";
+				//복도자리
+				if (j == 2 || j == 7) {
+					seatMark1 = "  ";
+				}
+				if (seat[i][j] == 1) {
+					seatMark2 = "■";
+				} else {
+					seatMark2 = "□";
+				}
+				System.out.print(seatMark1 + seatMark2);
+			}
+			System.out.println();
+		}
+		System.out.println("======================");
+	}
 
 	// 사용자가 좌석입력하기
 	public void enterSeat() {
@@ -109,21 +133,21 @@ public class TrainReservation {
 			setSelectedSeatRow(input.nextInt());
 			setSelectedSeatColumn(input.nextInt());
 
-			//[예약]인경우 이미 예약된 자리인지 확인
-			if(getSelectedMenu()==1){
+			// [예약]인경우 이미 예약된 자리인지 확인
+			if (getSelectedMenu() == 1) {
 				if (isReservedCheck()) {
 					System.out.println("예약된 자리입니다. 다른 자리를 선택하세요.");
 				} else {
 					break;
 				}
-			}else {
+			} else {
 				if (isReservedCheck()) {
 					System.out.println("예약되지 않은 자리 입니다. 취소할 좌석을 다시 확인하세요");
 				} else {
 					break;
 				}
 			}
-			
+
 		}
 	}
 
@@ -132,22 +156,22 @@ public class TrainReservation {
 		boolean isCheck;
 		int i = getSelectedSeatRow();
 		int j = getSelectedSeatColumn();
-		//예약시확인
-		if(getSelectedMenu()==1){
+		// 예약시확인
+		if (getSelectedMenu() == 1) {
 			if (seat[i][j] == 1) {
 				isCheck = true;
 			} else {
 				isCheck = false;
 			}
-		//취소시확인
-		}else {
+			// 취소시확인
+		} else {
 			if (seat[i][j] == 0) {
 				isCheck = true;
 			} else {
 				isCheck = false;
 			}
 		}
-	
+
 		return isCheck;
 	}
 
@@ -174,13 +198,12 @@ public class TrainReservation {
 	}
 
 	public void reservationOrCancel() {
-		
-		if(getSelectedMenu() ==1){
+
+		if (getSelectedMenu() == 1) {
 			System.out.println("선택하신 좌석으로 예약 하시겠습니까?(1:네 / 2:좌석 다시 선택하기)");
-		}else {
+		} else {
 			System.out.println("선택하신 좌석을 예약취소 하시겠습니까?(1:네 / 2:좌석 다시 선택하기)");
 		}
-		
 
 		Scanner input = new Scanner(System.in);
 		int confirmSeat = input.nextInt();
