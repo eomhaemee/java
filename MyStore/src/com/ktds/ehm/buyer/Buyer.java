@@ -1,46 +1,42 @@
 package com.ktds.ehm.buyer;
 
-import com.ktds.ehm.seller.Seller;
+import com.ktds.ehm.BuyerInterface;
+import com.ktds.ehm.SellerInterface;
 import com.ktds.ehm.vo.BasketVO;
 /**
  * Seller에게 상품을 구매하고 금액을 Seller에게 지불한다.
  * @author Admin
  *
  */
-public class Buyer {
+public class Buyer implements BuyerInterface {
 	
 	private BasketVO basketVO;
-	/**
-	 * 생성자
-	 * @param productQuantity
-	 */
+
 	public Buyer(int productQuantity,int money){
 		System.out.println("구매자를 생성합니다.");
-		//초기값 세팅
-		//setProductQuantity(productQuantity);
-		//setMoney(money);
 		// 초기값 셋팅
 		basketVO = new BasketVO();
 		basketVO.setProductQuantity(productQuantity);
 		basketVO.setMoney(money);
-		
-		//현황 출력하기
-		//this : 이부분을 호출한 주체 (buyer객체)
-		//toString이 오버라이딩 되어 있으므로 println으로 아래 부분이 호출
-		//this 하면 자동으로 toString 호출
-		
+
 		System.out.println(this);
+		System.out.println("=========");
 	}
 
 	/**
 	 * 구매하기
 	 * 구매자가 가진 상품갯수에 1 더해준다.
 	 */
-	public void buy(Seller seller){
+/*	public void buy(Seller seller){
 		seller.sell(this);
-		
-		//this.productQuantity++;
 		basketVO.plusProductQuantity();
+	}*/
+
+	@Override
+	public void buy(SellerInterface seller) {
+		seller.sell(this);
+		basketVO.plusProductQuantity();
+		
 	}
 	/**
 	 * 지불하기
@@ -48,7 +44,6 @@ public class Buyer {
 	 * @param 지불할 금액
 	 */
 	public void pay(int money){
-		//this.money -= money;
 		basketVO.minusMoney(money);
 	}
 	
@@ -62,4 +57,5 @@ public class Buyer {
 						basketVO.getProductQuantity(), basketVO.getMoney());
 		return message;
 	}
+
 }
