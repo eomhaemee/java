@@ -59,6 +59,7 @@ public class TrainReservation {
 				chageSeat();
 				// 종료
 			} else if (this.selectedMenu == 3) {
+				System.out.println("예약프로그램 종료합니다.");
 				break;
 				// 잘못눌렀군 다시 입력
 			} else {
