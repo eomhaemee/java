@@ -1,45 +1,70 @@
 package com.ktds.ehm.dao;
 
-import static com.ktds.ehm.constants.BasketConst.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ktds.ehm.vo.BasketVO;
+import com.ktds.ehm.vo.DrinkInfoVO;
+import com.ktds.ehm.vo.UserInfoVO;
+
+import static com.ktds.ehm.constants.BasketConst.*;
 
 public class VendingMachineDaoImpl implements VendingMachineDao {
 
-	private List<BasketVO> basketList;
+	private List<DrinkInfoVO> drinkInfoList;
+	private UserInfoVO userInfoVO;
+	private DrinkInfoVO drinkInfoVO;
 
-	public VendingMachineDaoImpl() {
-		basketList = new ArrayList<BasketVO>();
+	public VendingMachineDaoImpl(int inputMoney) {
+
+		this.drinkInfoList = new ArrayList<DrinkInfoVO>();
+		this.userInfoVO = new UserInfoVO(inputMoney);
+
+		// 자판기초기 세팅
+		for (int menuNo = 0; menuNo < DRINK_SIZE; menuNo++) {
+			drinkInfoVO = new DrinkInfoVO(DRINK_NAME[menuNo], DRINK_PRICE[menuNo], 0, DRINK_STOCK[menuNo]);
+			drinkInfoList.add(menuNo, drinkInfoVO);
+		}
+
 	}
 
 	@Override
-	public List<BasketVO> queryAllList() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<DrinkInfoVO> getAllDrinkInfo() {
+
+		return drinkInfoList;
 	}
 
 	@Override
-	public BasketVO findOneList(int index) {
-		return basketList.get(index);
-		
+	public DrinkInfoVO getDrinkInfo(int chooseMenuNo) {
+
+		return drinkInfoList.get(chooseMenuNo);
 	}
 
-/*	public void findBuyerDrinkCount(int index, BasketVO basketVO) {
-		int buyerItemCnt[] = basketList.get(index).getBuyerItemCnt();
-		int buyerCnt = buyerItemCnt[index];
-	}
-*/
 	@Override
-	public BasketVO setList(int index, BasketVO basketVO) {
-		return basketList.set(index, basketVO);
-	
+	public void setDrinkInfo(int chooseMenuNo, DrinkInfoVO drinkInfoVO) {
+		drinkInfoList.set(chooseMenuNo, drinkInfoVO);
 	}
 
-	
-	
-	
-	
+	@Override
+	public int getUserMoney(int buyerOrSeller) {
+
+		if (buyerOrSeller == BUYER) {
+			return userInfoVO.getBuyerMoney();
+		} else {
+			return userInfoVO.getSellerMoney();
+		}
+
+	}
+
+	@Override
+	public void setBuyerMoney(int buyerMoney) {
+		userInfoVO.setBuyerMoney(buyerMoney);
+
+	}
+
+	@Override
+	public void setSellerMoney(int sellerMoney) {
+		userInfoVO.setSellerMoney(sellerMoney);
+
+	}
+
 }

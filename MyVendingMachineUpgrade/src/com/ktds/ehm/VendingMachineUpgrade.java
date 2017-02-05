@@ -6,17 +6,17 @@ import com.ktds.ehm.biz.VendingMachineBiz;
 import com.ktds.ehm.biz.VendingMachineBizImpl;
 
 public class VendingMachineUpgrade {
+	Scanner input = null;
 
 	public void start() {
-
-		Scanner input = new Scanner(System.in);
-
-		System.out.println("돈을 입력하세요");
+		input = new Scanner(System.in);
+		System.out.println("돈을 입력하세요: ");
 		int inputMoney = input.nextInt();
+		System.out.println("입력하신 금액 : " + inputMoney + " 원");
 
 		VendingMachineBiz vendingMachineBiz = new VendingMachineBizImpl(inputMoney);
-
 		vendingMachineBiz.sell();
+	
 
 	}
 
