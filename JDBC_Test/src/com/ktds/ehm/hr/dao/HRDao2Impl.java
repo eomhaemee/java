@@ -10,7 +10,7 @@ import com.ktds.ehm.dao.support.QueryHandler;
 import com.ktds.ehm.dao.support.annotation.BindData;
 import com.ktds.ehm.hr.vo.EmployeesVO;
 
-public class HR2DaoImpl extends JDBCDaoSupport implements HRDao2 {
+public class HRDao2Impl extends JDBCDaoSupport implements HRDao2 {
 
 	@Override
 	public List<EmployeesVO> getAllEmployees() {

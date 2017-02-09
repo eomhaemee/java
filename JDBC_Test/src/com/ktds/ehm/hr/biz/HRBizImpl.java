@@ -2,7 +2,7 @@ package com.ktds.ehm.hr.biz;
 
 import java.util.List;
 
-import com.ktds.ehm.hr.dao.HR2DaoImpl;
+import com.ktds.ehm.hr.dao.HRDao2Impl;
 import com.ktds.ehm.hr.dao.HRDao;
 import com.ktds.ehm.hr.dao.HRDao2;
 import com.ktds.ehm.hr.dao.HRDaoImpl;
@@ -17,7 +17,7 @@ public class HRBizImpl implements HRBiz {
 	public HRBizImpl() {
 
 		this.hrDao = new HRDaoImpl();
-		this.hrDao2 = new HR2DaoImpl();
+		this.hrDao2 = new HRDao2Impl();
 	}
 
 	@Override
