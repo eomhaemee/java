@@ -2,17 +2,22 @@ package com.ktds.ehm.hr.biz;
 
 import java.util.List;
 
+import com.ktds.ehm.hr.dao.HR2DaoImpl;
 import com.ktds.ehm.hr.dao.HRDao;
+import com.ktds.ehm.hr.dao.HRDao2;
 import com.ktds.ehm.hr.dao.HRDaoImpl;
+import com.ktds.ehm.hr.vo.CountriesVO;
 import com.ktds.ehm.hr.vo.EmployeesVO;
 
 public class HRBizImpl implements HRBiz {
 
 	private HRDao hrDao;
-
+	private HRDao2 hrDao2;
+	
 	public HRBizImpl() {
 
 		this.hrDao = new HRDaoImpl();
+		this.hrDao2 = new HR2DaoImpl();
 	}
 
 	@Override
@@ -55,6 +60,46 @@ public class HRBizImpl implements HRBiz {
 					employeesVO.getJobs().getMaxSalary());
 		}
 		
+	}
+
+	@Override
+	public void printAllCountries() {
+		List<CountriesVO> countries = hrDao.getAllCountries();
+		System.out.printf("%s\t%s\t%s\t%s\n",
+				"CountryId","CountryName","RegionId","ResionName");
+		System.out.println("===============================================================");
+		
+		for (CountriesVO countriesVO : countries) {
+			System.out.printf("%s\t%s\t%d\t%s\n",
+				countriesVO.getCountryId(),
+				countriesVO.getCountryName(),
+				countriesVO.getRegionId(),
+				countriesVO.getRegionsVO().getResionName()
+					);
+		}
+		
+	}
+
+	
+	@Override
+	public void printOneEmployee(int emplyeeId) {
+		EmployeesVO employees = hrDao.fineOneEmployee(emplyeeId);
+		System.out.printf("%d\t%s\t%s\t%s\n",
+				employees.getEmployeeId(),
+				employees.getFirstName(),
+				employees.getLastName(),
+				employees.getEmail());
+	}
+
+	public void printAllEmployees2(){
+		List<EmployeesVO> employees = hrDao2.getAllEmployees();
+		for (EmployeesVO employeesVO : employees) {
+			System.out.printf("%d\t%s\t%s\t%d\n",
+					employeesVO.getEmployeeId(),
+					employeesVO.getFirstName(),
+					employeesVO.getLastName(),
+					employeesVO.getSalary());
+		}
 	}
 
 }

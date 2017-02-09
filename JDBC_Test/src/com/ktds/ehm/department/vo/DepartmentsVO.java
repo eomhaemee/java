@@ -5,6 +5,32 @@ public class DepartmentsVO {
 	private String department_name;
 	private int manager_id;
 	private int location_id;
+	
+	private EmployeesVO employeesVO;
+	
+	private LocationsVO locationsVO;
+	
+	
+	
+	public LocationsVO getLocationsVO() {
+		if ( locationsVO == null )  {
+			locationsVO = new LocationsVO();
+		}
+		return locationsVO;
+	}
+	public void setLocationsVO(LocationsVO locationsVO) {
+		this.locationsVO = locationsVO;
+	}
+	public EmployeesVO getEmployeesVO() {
+		if ( employeesVO == null ) {
+			employeesVO = new EmployeesVO();
+		}
+		return employeesVO;
+	}
+	public void setEmployeesVO(EmployeesVO employeesVO) {
+		this.employeesVO = employeesVO;
+	}
+	
 	public int getDepartment_id() {
 		return department_id;
 	}

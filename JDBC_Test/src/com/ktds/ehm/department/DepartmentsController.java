@@ -7,7 +7,9 @@ public class DepartmentsController {
 
 	public void start(){
 		DepartmentsBiz departmentsBiz = new DepartmentsBizImpl();
-		departmentsBiz.printAllDepartments();
+		//departmentsBiz.printAllDepartments();
+		//departmentsBiz.printAllDepartmentsWithEmp();
+		departmentsBiz.printAllLocationWithdept();
 	}
 	public static void main(String[] args) {
 		new DepartmentsController().start();

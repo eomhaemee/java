@@ -1,10 +1,15 @@
 package com.ktds.ehm.hr.vo;
 
-public class JobsVO {
+import com.ktds.ehm.dao.support.annotation.Types;
 
+public class JobsVO {
+	@Types(alias = "D_JOB_ID")
 	private String jobId;
+	@Types
 	private String jobTitle;
+	@Types
 	private int minSalary;
+	@Types
 	private int maxSalary;
 	public String getJobId() {
 		return jobId;

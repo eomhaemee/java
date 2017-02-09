@@ -1,54 +1,18 @@
-package com.ktds.ehm.hr.vo;
-
-import com.ktds.ehm.dao.support.annotation.Types;
+package com.ktds.ehm.department.vo;
 
 public class EmployeesVO {
-	@Types
+
 	private	 int employeeId;
-	@Types
 	private	 String firstName;
-	@Types
 	private String lastName;
-	@Types
 	private String email;
-	@Types
 	private String phoneNumber;
-	@Types
 	private String hireDate;
-	@Types
 	private String jobId;
-	@Types
 	private int salary;
-	@Types
-	private double commissionPct;
-	@Types
+	private double commisionPct;
 	private int managerId;
-	@Types
 	private int departmentId;
-	
-	private DepartmentsVO departments;
-	private JobsVO jobs;
-	
-	//getter에만 null체크 추가
-	public JobsVO getJobs() {
-		if( jobs == null ) {
-			jobs = new JobsVO();
-		}
-		return jobs;
-	}
-	public void setJobs(JobsVO jobs) {
-		this.jobs = jobs;
-	}
-	
-	public DepartmentsVO getDepartments() {
-		if( departments  == null){
-			departments = new DepartmentsVO();
-		}
-		return departments;
-	}
-	public void setDepartments(DepartmentsVO departments) {
-		this.departments = departments;
-	}
 	
 	public int getEmployeeId() {
 		return employeeId;
@@ -98,14 +62,11 @@ public class EmployeesVO {
 	public void setSalary(int salary) {
 		this.salary = salary;
 	}
-
-	
-	
-	public double getCommissionPct() {
-		return commissionPct;
+	public double getCommisionPct() {
+		return commisionPct;
 	}
-	public void setCommissionPct(double commissionPct) {
-		this.commissionPct = commissionPct;
+	public void setCommisionPct(double commisionPct) {
+		this.commisionPct = commisionPct;
 	}
 	public int getManagerId() {
 		return managerId;

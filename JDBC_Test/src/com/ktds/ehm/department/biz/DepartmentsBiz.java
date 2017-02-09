@@ -6,4 +6,8 @@ import com.ktds.ehm.department.vo.DepartmentsVO;
 
 public interface DepartmentsBiz {
 	public void printAllDepartments();
+	
+	public void printAllDepartmentsWithEmp();
+	
+	public void printAllLocationWithdept();
 }

@@ -1,9 +1,15 @@
 package com.ktds.ehm.hr.vo;
 
+import com.ktds.ehm.dao.support.annotation.Types;
+
 public class DepartmentsVO {
+	@Types(alias = "D_DEPARTMENT_ID")
 	private int departmentId;
+	@Types
 	private String departmentName;
+	@Types
 	private int managerId;
+	@Types
 	private int locationId;
 	public int getDepartmentId() {
 		return departmentId;
