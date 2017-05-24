@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.1//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+	<configuration>
+		<typeAliases>
+			<typeAlias type="com.naver.book.publisher.vo.PublisherVO" alias="PublisherVO"/>
+			<typeAlias type="com.naver.book.publisher.vo.PublisherSearchVO" alias="PublisherSearchVO"/>
+		</typeAliases>
+		<mappers>
+			<!-- Paging관련 쿼리들이 있는 mapper -->
+			<mapper resource="commonDaoSql.xml"/>
+			<mapper resource="com/naver/book/publisher/dao/sql/publisherDaoSql.xml"/>
+		</mappers>
+	</configuration>
