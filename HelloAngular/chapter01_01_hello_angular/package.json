@@ -1,0 +1,31 @@
+{
+  "name": "hello_angular",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsc && concurrently \"npm run tsc:w\" \"npm run lite\"",
+    "lite": "lite-server",
+    "postinstall": "typings install",
+    "tsc": "tsc",
+    "tsc:w": "tsc -w",
+    "typings": "typings"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@angular/common": "^4.1.2",
+    "@angular/compiler": "^4.1.2",
+    "@angular/core": "^4.1.2",
+    "@angular/platform-browser": "^4.1.2",
+    "@angular/platform-browser-dynamic": "^4.1.2",
+    "concurrently": "^3.4.0",
+    "core-js": "^2.4.1",
+    "es6-shim": "^0.35.3",
+    "lite-server": "^2.3.0",
+    "reflect-metadata": "^0.1.10",
+    "rxjs": "^5.4.0",
+    "systemjs": "^0.20.12",
+    "zone.js": "0.8.4"
+  }
+}

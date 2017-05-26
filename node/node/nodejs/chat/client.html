@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--서버에서 생성한 소켓을 객체로 넘겨받음-->
+    <script type="text/javascript" src="http://localhost:3000/socket.io/socket.io.js"></script>
+    <!--static으로 등록해 놨으므로 경로없이 바로 접근가능-->
+    <script type="text/javascript" src="http://localhost:3000/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript">
+        //spring 에서 접근가능 하도록 ready전에 선언
+        var newPostUrl = "";
+
+        $().ready(function(){
+
+            //prompt: 브라우저에게 입력받을수있음
+            var name = prompt('이름을 입력하세요.');
+           
+            var myId = "";
+            //연결
+            var socket = io.connect('http://localhost:3000');
+            //대화방접속
+            socket.emit('join', name);
+
+            //고유ID받기
+            socket.on("getMyId",function(id){
+                myId = id;
+            });
+            //접속 사용자 보여주기
+            socket.on("displayAllUsers",function(allUsers){
+                console.log(allUsers);
+
+                //접속자현황 초기화
+                $('#connectedUsers').html("");
+                //접속자 현황 갱신
+                for ( var i in allUsers){
+                    $('#connectedUsers').append($('<div data-id="'+allUsers[i].id+'">' + allUsers[i].name+'</div>'));
+                }
+                $('#connectedUsers').append($('<div data-id="all"> 전체에게 보내기</div>'))
+            });
+
+            var receiver = 'all';
+            $('#connectedUsers').on("click","div",function(){
+                receiver = $(this).data('id');
+            });
+
+            //message전달 받기
+            socket.on("receive", function(data) {
+                var message = $("<div style='width : 220px'>"+data.name +" : "+ data.chat+" </div>");
+                if( myId == data.sender) {
+                    message.css({
+                        'color' : '#FF0000',
+                        'text-align': 'right'
+                    });
+                }
+                $('#chatMessages').append(message);
+                $('#chatMessages').scrollTop($("#chatMessages")[0].scrollHeight);
+                //alert(data);
+            });
+
+
+            socket.on('popupNews',function(newPostUrl){
+                if( confirm('새로운글이 등록 됐습니다. 확인하시겠습니까? ') ){
+                    location.href = newPostUrl;
+                }
+            });
+
+            $('#hiddenButton').click(function(){
+                 socket.emit('newPost',newPostUrl);
+            });
+
+            function sendBroadcast(){
+                var chat = $('#chat').val();
+                //socket.emit("broadcast", chat);
+                socket.emit("broadcast",{
+                    'name' : name,
+                    'chat' : chat,
+                    'sender' : myId,
+                    'receiver' : receiver
+                });
+
+                $('#chat').val('');
+                $('#chat').focus();
+            }
+  
+            $("#chat").keydown(function(e) {
+                if (e.which == 13) { //enter
+                    sendBroadcast();
+                }
+            });
+
+            $('#button').click(function(){
+                sendBroadcast();
+            });
+        });
+
+    </script>
+</head>
+<body>
+    <div style="width : 700px; " >
+        <div id = "chatMessages" style="display: inline-block; width : 300px; overflow:auto; background-color: lightgoldenrodyellow"></div>
+        <div id = "connectedUsers" style="display: inline-block; width : 200px; background-color: cornflowerblue; " > </div>    
+    </div>
+
+    <input type="text" name="chat" id="chat"/>
+    <input type="button" id="button" value="전송" />
+    <div id="hiddenButton"></div>
+</body>
+</html>

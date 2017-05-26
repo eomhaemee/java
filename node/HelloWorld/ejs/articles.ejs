@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%= title%></title>
+</head>
+<body>
+<table>
+    <tr>
+        <td>Number</td>
+        <td>Subject</td>
+    </tr>
+    <% for(var i in list) { %>
+    <tr>
+        <td><%= list[i].number%></td>
+        <td><%= list[i].subject%></td>
+    </tr>
+    <% } %>
+</table>
+
+</body>
+</html>

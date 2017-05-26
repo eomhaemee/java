@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="/node_modules/jquery/dist/jquery.js"></script>
+    <script type="text/javascript">
+        $().ready(function(){
+
+            $(".memberName").keydown(function(e) {
+                if (e.which == 13) { //enter
+                    $.post("/addMember",{
+                        "memberName" :$(".memberName").val(),
+                        "teamId" :  Number($(".teamId").text())
+                    }, function(response){
+                        if(response =='true'){
+                            location.href='/';
+                        }
+                    });
+                }
+            });
+
+            $(".teamName").keyup(function(e){
+                if (e.keyCode == 13) { //enter
+                    $.post("/addTeam",{
+                        "teamName" :$(".teamName").val()
+                    }, function(response){
+                        location.href='/';
+                    });
+                }
+            });
+
+            $("body").on("click",".contextMenu",function(e) {
+
+                $.post("/delete",{
+                    playerId: memberId,
+                    teamId : Number($(".teamId").text())
+                }, function(response){
+                    location.href='/';
+                });
+                /*
+                 $.ajax({
+                 method: "DELETE",
+                 url: "/delete",
+                 data: {
+                 playerId: memberId,
+                 teamId : Number($(".teamId").text())
+                 }
+                 }).done(function (msg) {
+                 location.href='/';
+                 });*/
+            });
+
+            /*var team = "<div class='team' style='width: 150%; display: inline-block'><input type='text' class='teamName' ></input></div>";
+             $(".teamList").on("click",".addTeam",function(e){
+             $(".teamList").append($(team));
+             });*/
+
+            //멤버 삭제 contextmenu
+            var contextMenu = "<div class='contextMenu'><a href='#'>삭제</a></div>";
+            var memberId;
+            $("#memberList").on("click",".member",function(e){
+                $(".contextMenu").remove();
+                var x = e.pageX;
+                var y = e.pageY;
+
+                memberId = $(this).data('memberid');
+
+                $("body").append($(contextMenu));
+                $(".contextMenu").css({
+                    top :y,
+                    left:x,
+                    position :'absolute',
+                    "z-index" : 9,
+                    'background-color' : 'white',
+                    padding : '5px',
+                    border: "1px solid #CCC"
+                });
+            });
+
+        });
+    </script>
+</head>
+<body>
+
+<div class="teamList" style="display:inline-block ; width: 200px; height: 250px;background-color:cornflowerblue ">
+    <%if (locals.teams) { %>
+    <% for( let team of teams ) { %>
+    <a href = "/team/<%=team.id%>"><%= team.teamName %></a> <br/>
+
+    <% } %>
+    <% } %>
+    <div class='team' style='width: 150%; display: inline-block'><input type='text' class='teamName' ></input></div>
+    <input type="image" class="addTeam" src="http://localhost:3000/add.png"> </input>
+</div>
+
+<div id="memberList" style="display:inline-block ; width: 150px; height: 250px; ">
+
+    <%if (locals.player){%>
+        <p class="teamId" hidden="hidden"><%=teamsId%></p>
+        <% if (player.length > 0) {%>
+            <% for( let member of player ) { %>
+            <div class='member' data-memberid="<%=Number(member.id)%>">
+                <%= member.memberName %><br/>
+            </div>
+            <% } %>
+        <% } %>
+    <% } %>
+
+    <input type='text' class='memberName' ></input>
+    <input type="image" class="addMember" src="http://localhost:3000/add.png"> </input>
+</div>
+
+</body>
+</html>
