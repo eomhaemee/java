@@ -1,0 +1,48 @@
+@CHARSET "UTF-8";
+/* 스타일 공통 설정 */
+form#searchForm > a{
+	padding : 5px;
+	text-decoration: none;
+	color: #333;
+	font-size: 9px;
+	margin-right: 3px;
+}
+form#searchForm > a.page{
+	background-color: #EEE;
+	border: 1px solid #AAA;
+}
+form#searchForm > a:HOVER {
+ 	color: #F00;	
+}
+form#searchForm > a > b {
+ 	color: #F00;	
+}
+div {
+	display: inline-block;
+}
+/* div#list,div#detail { */
+#menu{	
+  position: fixed;
+  left: 0;
+  top: 60px;
+  width: 260px;
+  margin-top: -2.5em;
+}
+
+#list,#detail{	
+  position: relative;
+  left: 270px;
+  top: 40px;
+  width: 900px;
+  margin-top: -2.5em;
+}
+#login{
+  position: relative;
+  left: 0;
+  top: 20px;
+  width: 260px;
+}
+/* 
+form#searchForm > a:LINK, form#searchForm > a:VISITED{}
+form#searchForm > a:ACTIVE {}
+*/

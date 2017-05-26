@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MemberDao">
+	<insert id="insertMember" parameterType="MemberVO">
+		INSERT INTO MBR  /* [MemberDao][insertMember]*/ (
+		                 MBR_ID
+						, NCK_NM
+						, MBR_PWD
+						, AUTH
+		                  ) 
+		          VALUES  (
+		                  #{memberId} 
+		                  ,#{nickName} 
+		                  ,#{memberPassword}  
+		                  ,'USR'
+		                  ) 
+	</insert>
+</mapper>

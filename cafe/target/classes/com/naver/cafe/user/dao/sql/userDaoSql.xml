@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="UserDao">
+	<select id="selectAllUsers" resultType="UsersVO">
+		SELECT	/* [UserDao][selectAllUsers]*/
+	 			USR_ID		userId
+		       	, USR_NM   	userName
+		       	, USR_PWD	userPassword
+		       	, JOIN_DT 	joinDate
+		FROM	USRS  
+	</select>
+	<select id="selectOneUsers" resultType="UsersVO" parameterType="UsersVO">
+		SELECT	/* [UserDao][selectOneUsers]*/
+	 			USR_ID		userId
+		       	, USR_NM   	userName
+		       	, USR_PWD	userPassword
+		       	, JOIN_DT 	joinDate
+		FROM	USRS  
+		WHERE	USR_ID = #{userId}
+		AND		USR_PWD = #{userPassword}
+	</select>	
+	<insert id="insertUsers" parameterType="UsersVO">
+		INSERT INTO USRS  /* [UserDao][insertUsers]*/ (
+		                  USR_ID  
+		           		 , USR_NM   
+		        		 , USR_PWD 
+		        		 , JOIN_DT
+		        		 , SALT
+		                  ) 
+		          VALUES  (
+		                  #{userId} 
+		                  ,#{userName} 
+		                  ,#{userPassword} 
+		                  ,SYSDATE 
+		                  ,#{salt}
+		                  ) 
+
+	</insert>
+	<select id="getSaltById" resultType="string">
+		SELECT 	SALT 
+		FROM 	USRS 
+		WHERE 	USR_ID =  #{userId} 
+	</select>
+	<select id="selectLockStatus" resultType="_int" parameterType="UsersVO"> 
+		SELECT 	COUNT(1) CNT
+		FROM 	USRS 
+		WHERE 	USR_ID =  #{userId} 
+		AND     IS_LOCK = 'Y'
+		AND     LATEST_TRY_LOGIN_DATE + (LOCK_COUNT/24/60)  > SYSDATE
+	</select>
+	<update id="updateClearLoginFailCount" parameterType="UsersVO">
+		UPDATE 	USRS
+		SET		LOGIN_FAIL_COUNT = 0
+				,IS_LOCK = 'N'
+		WHERE	USR_ID =  #{userId} 
+		AND		IS_LOCK = 'Y'	
+	</update>
+	<update id="updateClearLockCount" parameterType="UsersVO">
+		UPDATE 	USRS
+		SET		LOCK_COUNT = 0 
+		WHERE		USR_ID =  #{userId} 
+	</update>
+	<update id="plusLoginFaileCount" parameterType="UsersVO">
+		UPDATE USRS
+		SET		LOGIN_FAIL_COUNT = LOGIN_FAIL_COUNT +1
+				, LATEST_TRY_LOGIN_DATE = SYSDATE
+		WHERE	USR_ID =  #{userId} 		
+	</update>
+	<update id="updateLockStatus" parameterType="UsersVO">
+		UPDATE USRS
+		SET		IS_LOCK = 'Y'
+				, LOCK_COUNT = LOCK_COUNT + 1
+		WHERE	USR_ID =  #{userId}
+		AND		LOGIN_FAIL_COUNT > 03
+	</update>
+</mapper>
