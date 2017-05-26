@@ -1,0 +1,7 @@
+
+<form #signupForm="ngForm" (ngSubmit)="signupUser(signupForm)">
+  <input type="text" name="id" ngModel placeholder="아이디를 입력해주세요"><br/>
+  <input type="text" name="name" ngModel placeholder="이름을 입력해주세요"><br/>
+  <input type="password" name="password" ngModel placeholder="비밀번호를 입력해주세요"><br/>
+  <input type="submit" value="SignUp">
+</form>

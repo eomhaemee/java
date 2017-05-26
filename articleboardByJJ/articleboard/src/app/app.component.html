@@ -1,0 +1,11 @@
+<div *ngIf="getUser().id==''">
+  <a [routerLink]="['user/signup']">SignUP</a>
+  <a [routerLink]="['user/signin']">LogIn</a>
+</div>
+<div *ngIf="getUser().id != ''">
+  {{getUser().name}}님 환영합니다.
+  <a (click)="logout()">LogOut</a>
+</div>
+
+<router-outlet></router-outlet>
+<!-- 여러가지 컴포넌트가 여기에 보일꺼다. -->

@@ -1,0 +1,22 @@
+<form #writeForm="ngForm" (ngSubmit)="writeArticle(writeForm)" >
+  <input type="text" name="subject" ngModel #subject placeholder="제목을 입력해주세요"><br>
+  <input type="text" name="writer" ngModel #writer placeholder="작성자를 입력해주세요"><br>
+
+  <textarea name="content" ngModel #content>
+
+  </textarea><br/>
+  <input type="file" name="single" ng2FileSelect [uploader] ="uploader"/>
+  <button type="button" (click)="uploader.uploadAll()">
+    <span>Upload</span>
+  </button>
+  <div *ngFor="let item of uploader.queue">
+    <p>
+      {{item.file.name}} |
+      {{item.file.size / 1024 / 1024 | number :'.2'}} MB |
+      <span [innerText]="item.progress"></span>
+    </p>
+  </div>
+  <input type="submit" value="전송"/>
+
+
+</form>
