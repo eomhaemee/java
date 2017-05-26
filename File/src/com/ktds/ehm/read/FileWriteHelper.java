@@ -36,7 +36,6 @@ public class FileWriteHelper {
 			logsFolder.mkdirs();
 		}
 	}
-
 	private static void makeCalculatorLogFile() {
 		File logFile = new File(LOG_FILE_PATH);
 

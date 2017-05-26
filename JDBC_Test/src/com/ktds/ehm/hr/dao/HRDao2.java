@@ -9,6 +9,7 @@ public interface HRDao2 {
 	public List<EmployeesVO> getAllEmployees();
 	
 	public EmployeesVO findOneEmployee(int employeeId);
-
+	
+	public List<EmployeesVO> getAllEmployees2();
 	
 }

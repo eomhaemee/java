@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<!-- namespace="interface명"  컬럼의 alias를 VO컬럼과 동일하게 주면 BoardVO와 연결됨
+resultType : List의 리턴타입명시 resultType="com.ktds.board.vo.BoardVO" ==> MyBatis.xml 에 있는 aliase로 대체 가능
+sql 첫줄에 [namespace명][id명] 을 달아주자-->
+<mapper namespace="BoardDao">
+	<select id="getAllArticles" resultType="BoardVO" parameterType="BoardSearchVO">
+	 	SELECT		/*  [BoardDao][getAllArticles] */
+	 				*
+	  	FROM	(	
+	  				SELECT ROWNUM RNUM
+	  						, A.*
+	  				FROM( 
+	  					SELECT 
+		 	  					BOARD_ID	boardId
+					 			, SUBJECT 	subject
+					 			, CONTENT 	content       
+					 			, WRITER  	writer      
+					 			, LIKE_COUNT	likeCount    
+					 			, WRITE_DATE 	writeDate   
+					 			, IP       	ip   
+					 			, PST       post    
+	 					FROM		BOARD 
+	 					WHERE	1 = 1
+	 					<if test="keyword != null">
+	 					AND	SUBJECT LIKE '%' || #{keyword} || '%'
+	 					</if>
+	 					<if test="writer != null">
+	 					AND	writer LIKE '%' || #{writer} || '%'
+	 					</if>
+	 					<if test="content != null">
+	 					AND	content LIKE '%' || #{content} || '%'
+	 					</if>
+	 					ORDER BY	BOARD_ID DESC     
+	 					) A
+	 				WHERE	ROWNUM <![CDATA[ <= ]]> #{endArticleNumber}
+	 			)
+	 		WHERE RNUM >= #{startArticleNumber}	
+	</select>	
+	<select id="getAllArticlesCount" resultType="_int">
+		SELECT	/*  [BoardDao][getAllArticlesCount] */ 
+				COUNT(1)
+		FROM	BOARD
+		WHERE	1 = 1
+		<if test="keyword != null">
+		AND	SUBJECT LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="writer != null">
+		AND	writer LIKE '%' || #{writer} || '%'
+		</if>
+		<if test="content != null">
+		AND	content LIKE '%' || #{content} || '%'
+		</if>
+	</select>
+	
+	<resultMap type="BoardVO" id="boardMap">
+		<!-- select 컬럼을 VO의 변수이름으로 매핑하는것 -->
+		<!-- PK컬럼인경우는 result가 아니라 id태그 -->
+		<id column="BOARD_ID" property="boardId"/>
+		<result column="SUBJECT" property="subject"/>
+		<result column="CONTENT" property="content"/>
+		<result column="WRITER" property="writer"/>
+		<result column="LIKE_COUNT" property="likeCount"/>
+		<result column="WRITE_DATE" property="writeDate"/>
+		<result column="IP" property="ip"/>
+		<result column="PST" property="post"/>
+		<result column="DSPLY_FL_NM" property="displayFileName"/>
+		<result column="RL_FL_NM" property="realFileName"/>
+		<!-- 조인이 1:1 로 될때는 association -->
+		<!-- 1:M인경우는 collection 을써야된데-->
+		<!-- javaType = "" mybaits에 정의된 alias적어줌 -->
+		<association property="userVO" javaType="UsersVO">
+			<id column="USR_ID" property="userId"/>
+			<result column="USR_NM" property="userName"/>
+			<result column="JOIN_DT" property="joinDate"/>
+		</association>
+	</resultMap>
+	<!-- join하는 경우 resultType 을 안쓰고 위의 resultMap을 정의하여 씀 -->
+	<!-- join하여 resultMap 쓰는 경우 alias필요 없음 -->
+	<select id="getOneArticle" resultMap="boardMap" parameterType="_int">
+		SELECT		/*  [BoardDao][getOneArticle] */
+	 					B.BOARD_ID	
+			 			, B.SUBJECT 	
+			 			, B.CONTENT 	       
+			 			, B.WRITER  	      
+			 			, B.LIKE_COUNT	    
+			 			, B.WRITE_DATE 	   
+			 			, B.IP       	   
+			 			, B.PST 
+			 			, B.DSPLY_FL_NM
+						, B.RL_FL_NM          
+				 		, U.USR_ID 
+					    , U.USR_NM 
+						, U.JOIN_DT  
+	 	FROM		BOARD B
+	 				, USRS U
+	 	WHERE		B.BOARD_ID = #{boardId}
+	 	AND			B.WRITER = U.USR_ID         
+		ORDER BY	B.BOARD_ID DESC   
+	</select>
+	<insert id="insertArticle" parameterType="BoardVO">
+	 		INSERT INTO  BOARD /* [BoardDao][insertArticle]*/
+	 					 (BOARD_ID       
+			 			, SUBJECT          
+			 			, CONTENT          
+			 			, WRITER           
+			 			, LIKE_COUNT       
+			 			, WRITE_DATE       
+			 			, IP  
+			 			<if test="post != null">               
+			 			, PST     
+			 			</if>
+			 			<if test="displayFileName != null">        
+			 			, DSPLY_FL_NM
+			 			</if>  
+			 			<if test="realFileName != null">     
+						, RL_FL_NM  
+						</if>          
+			 			)            
+			 	VALUES	( BOARD_ID_SEQ.NEXTVAL  
+			 			,#{subject}                 
+			 			,#{content}                 
+			 			,#{writer}                 
+			 			,0                 
+			 			, TO_CHAR(SYSDATE,'YYYYMMDD')  
+			 			,#{ip}      
+			 			<if test="post != null">             
+			 			,#{post}  
+			 			</if>
+			 			<if test="displayFileName != null">        
+			 			,#{displayFileName}
+			 			</if>  
+			 			<if test="realFileName != null">
+			 			,#{realFileName}   
+			 			</if>                  
+			 			)     
+		 			             
+	</insert>
+	<delete id="deleteBoard" parameterType="_int">
+		DELETE
+		FROM	BOARD
+		WHERE	BOARD_ID = #{boardId} 
+	</delete>
+</mapper>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<bean id="mainServiceImpl" class="com.ktds.ehm.service.MainServiceImpl">
+	<!--property: setMainBiz()가 호출됨, name setter의 set제외한 이름
+	                해당setter에 parameter를 지정해줘야함/ 인자 전달시 1.기본형이면:value, 1.객체면:ref  -->
+	<property name="mainBiz" ref="mainBizImpl"></property> 
+
+</bean>
+<bean id="mainBizImpl" class="com.ktds.ehm.biz.MainBizImpl"></bean>
+</beans>

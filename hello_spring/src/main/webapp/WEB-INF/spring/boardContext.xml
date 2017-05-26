@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<bean id="boardDaoImpl" class="com.ktds.board.dao.BoardDaoImpl">
+ 	<!-- dataSource는  다른 context에 있지만 ref 쓸수 있음 -->
+ 	<!-- 이제 dao에서 dataSource를 사용하지 않음 -->
+	<!-- <property name="dataSource" ref="dataSource"/> -->
+	<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
+</bean>
+<bean id="boardBizImpl" class="com.ktds.board.biz.BoardBizImpl">
+	<property name="boardDao" ref="boardDaoImpl"/>
+</bean>
+<bean id="boardServiceImpl" class="com.ktds.board.service.BoardServiceImpl">
+	<property name="boardBiz" ref="boardBizImpl"/>
+</bean>
+
+</beans>

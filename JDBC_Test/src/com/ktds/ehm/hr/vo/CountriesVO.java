@@ -2,7 +2,18 @@ package com.ktds.ehm.hr.vo;
 
 import com.ktds.ehm.dao.support.annotation.Types;
 
-public class CountriesVO {
+public class CountriesVO {	
+	private int employeeId;
+	private String firstName;
+	private String lastName;
+	private String email;
+	private String phoneNumber;
+	private String hireDate;
+	private String jobId;
+	private double salary;
+	private double commissionPct;
+	private int managerId;
+	private int departmentId;
 	@Types
 	private String countryId;
 	@Types

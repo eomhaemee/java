@@ -12,6 +12,9 @@ import com.ktds.ehm.hr.vo.CountriesVO;
 import com.ktds.ehm.hr.vo.DepartmentsVO;
 import com.ktds.ehm.hr.vo.EmployeesVO;
 import com.ktds.ehm.hr.vo.JobsVO;
+import com.ktds.ehm.hr.vo.LocationsVO;
+
+import oracle.net.aso.d;
 
 public class HRDaoImpl extends JDBCDaoSupport implements HRDao {
 
@@ -176,6 +179,134 @@ public class HRDaoImpl extends JDBCDaoSupport implements HRDao {
 			public Object getData(ResultSet rs) {
 				EmployeesVO employeesVO = new EmployeesVO();
 				BindData.bindData(rs, employeesVO);
+				return employeesVO;
+			}
+		});
+
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<EmployeesVO> getAllempInfo() {
+		return selectList(new QueryHandler() {
+
+			@Override
+			public String preparedQuery() {
+				StringBuffer query = new StringBuffer();
+
+				query.append("SELECT   E.EMPLOYEE_ID                      ");
+				query.append("        ,E.LAST_NAME                        ");
+				query.append("        ,J.JOB_TITLE                          ");
+				query.append("        ,L.CITY                             ");
+				query.append("FROM    EMPLOYEES E                         ");
+				query.append("        ,JOBS J                             ");
+				query.append("        ,DEPARTMENTS D                      ");
+				query.append("        ,LOCATIONS L                        ");
+				query.append("WHERE   E.JOB_ID = J.JOB_ID                 ");
+				query.append("AND     E.DEPARTMENT_ID = D.DEPARTMENT_ID   ");
+				query.append("AND     L.LOCATION_ID = D.LOCATION_ID       ");
+
+				return query.toString();
+			}
+
+			@Override
+			public void mappingParameters(PreparedStatement stmt) throws SQLException {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public Object getData(ResultSet rs) {
+				EmployeesVO employeesVO = new EmployeesVO();
+				BindData.bindData(rs, employeesVO);
+				BindData.bindData(rs, employeesVO.getJobs());
+				BindData.bindData(rs, employeesVO.getLocations());
+
+				return employeesVO;
+			}
+		});
+
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<EmployeesVO> findAllEmpInfo(int departmentId) {
+		return selectList(new QueryHandler() {
+
+			@Override
+			public String preparedQuery() {
+				StringBuffer query = new StringBuffer();
+				query.append("SELECT   E.EMPLOYEE_ID                                       ");
+				query.append("        ,E.LAST_NAME                                         ");
+				query.append("        ,NVL(E.DEPARTMENT_ID,00000)  DEPARTMENT_ID          ");
+				query.append("        ,NVL(D.DEPARTMENT_NAME,'부서없음')  DEPARTMENT_NAME  ");
+				query.append(" FROM    EMPLOYEES E                                         ");
+				query.append("        ,DEPARTMENTS D                                       ");
+				query.append("WHERE   E.DEPARTMENT_ID = D.DEPARTMENT_ID(+)                 ");
+				query.append("AND     E.DEPARTMENT_ID = ?                                  ");
+
+				return query.toString();
+			}
+
+			@Override
+			public void mappingParameters(PreparedStatement stmt) throws SQLException {
+				stmt.setInt(1, departmentId);
+
+			}
+
+			@Override
+			public Object getData(ResultSet rs) {
+				EmployeesVO employeesVO = new EmployeesVO();
+				BindData.bindData(rs, employeesVO);
+				BindData.bindData(rs, employeesVO.getDepartments());
+				return employeesVO;
+			}
+		});
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<EmployeesVO> findCityEmpInfo(String city) {
+		return selectList(new QueryHandler() {
+
+			@Override
+			public String preparedQuery() {
+				StringBuffer query = new StringBuffer();
+				query.append("SELECT   E.EMPLOYEE_ID                      ");
+				query.append("        ,E.LAST_NAME                        ");
+				query.append("        ,D.DEPARTMENT_NAME                  ");
+				query.append("        ,J.JOB_TITLE                        ");
+				query.append("        ,L.CITY                             ");
+				query.append("FROM    EMPLOYEES E                         ");
+				query.append("        ,JOBS J                             ");
+				query.append("        ,DEPARTMENTS D                      ");
+				query.append("        ,LOCATIONS L                        ");
+				query.append("WHERE   E.JOB_ID = J.JOB_ID                 ");
+				query.append("AND     E.DEPARTMENT_ID = D.DEPARTMENT_ID   ");
+				query.append("AND     L.LOCATION_ID = D.LOCATION_ID       ");
+				query.append("AND     L.CITY  = ?             			 ");
+				// 'Seattle'
+
+				return query.toString();
+			}
+
+			@Override
+			public void mappingParameters(PreparedStatement stmt) throws SQLException {
+				stmt.setString(1, city);
+
+			}
+
+			@Override
+			public Object getData(ResultSet rs) {
+				EmployeesVO employeesVO = new EmployeesVO();
+				JobsVO jobsVO = new JobsVO();
+				DepartmentsVO departmentsVO = new DepartmentsVO();
+				LocationsVO locationsVO = new LocationsVO();
+
+				BindData.bindData(rs, employeesVO);
+				BindData.bindData(rs, employeesVO.getJobs());
+				BindData.bindData(rs, employeesVO.getDepartments());
+				BindData.bindData(rs, employeesVO.getLocations());
 				return employeesVO;
 			}
 		});

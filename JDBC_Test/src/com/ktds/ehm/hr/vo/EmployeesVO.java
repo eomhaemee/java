@@ -26,8 +26,21 @@ public class EmployeesVO {
 	@Types
 	private int departmentId;
 	
-	private DepartmentsVO departments;
 	private JobsVO jobs;
+	private DepartmentsVO departments;
+	private	 LocationsVO locations;
+	
+	
+	public LocationsVO getLocations() {
+		if(locations == null){
+			locations  = new LocationsVO();
+		}
+		return locations;
+	}
+	
+	public void setLocations(LocationsVO locations) {
+		this.locations = locations;
+	}
 	
 	//getter에만 null체크 추가
 	public JobsVO getJobs() {

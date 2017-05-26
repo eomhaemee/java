@@ -50,10 +50,12 @@ public class HRDaoImpl_back extends JDBCDaoSupport implements HRDao {
 
 			// 6-1. 쿼리의 실행결과를 List 객체에 할당한다.
 			EmployeesVO employeesVO = null;
+			//EmployeesVO employeesVO = new EmployeesVO();
 			List<EmployeesVO> employees = new ArrayList<EmployeesVO>();
 
 			while (rs.next()) {
 				// 6-2.
+				//System.out.println(rs.getInt("EMPLOYEE_ID"));
 				employeesVO = new EmployeesVO();
 				employeesVO.setEmployeeId(rs.getInt("EMPLOYEE_ID"));
 				employeesVO.setFirstName(rs.getString("FIRST_NAME"));
@@ -458,6 +460,24 @@ public class HRDaoImpl_back extends JDBCDaoSupport implements HRDao {
 			}
 		}
 
+	}
+
+	@Override
+	public List<EmployeesVO> getAllempInfo() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<EmployeesVO> findAllEmpInfo(int departmentId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<EmployeesVO> findCityEmpInfo(String city) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

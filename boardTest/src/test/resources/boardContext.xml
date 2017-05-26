@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+<bean id="boardDaoImpl" class="com.ktds.ehm.board.dao.BoardDaoImpl">
+	<property name="dataSource" ref="dataSource"/>
+</bean>
+
+<bean id="boardBizImpl" class="com.ktds.ehm.board.biz.BoardBizImpl">
+	<property name="boardDao" ref="boardDaoImpl"/>
+</bean>
+
+<bean id="boardServiceImpl" class="com.ktds.ehm.board.service.BoardServiceImpl">
+	<property name="boardBiz" ref="boardBizImpl"></property>
+</bean>
+
+
+</beans>

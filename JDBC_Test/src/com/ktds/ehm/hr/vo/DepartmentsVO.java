@@ -1,5 +1,7 @@
 package com.ktds.ehm.hr.vo;
 
+import java.util.List;
+
 import com.ktds.ehm.dao.support.annotation.Types;
 
 public class DepartmentsVO {
@@ -11,6 +13,18 @@ public class DepartmentsVO {
 	private int managerId;
 	@Types
 	private int locationId;
+	
+	private List<EmployeesVO> employeeList;
+	
+	
+	
+	
+	public List<EmployeesVO> getEmployeeList() {
+		return employeeList;
+	}
+	public void setEmployeeList(List<EmployeesVO> employeeList) {
+		this.employeeList = employeeList;
+	}
 	public int getDepartmentId() {
 		return departmentId;
 	}
