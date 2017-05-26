@@ -5,7 +5,24 @@ public class PublisherSearchVO {
 	private int pageNo;
 	private int endArticleNumber;
 	private int startArticleNumber;
+	private boolean isUsePageing;
 	
+	
+	public PublisherSearchVO() {
+		this.isUsePageing = true;
+	}
+	
+	
+	public boolean getIsUsePageing() {
+		return isUsePageing;
+	}
+
+
+	public void setUsePageing(boolean isUsePageing) {
+		this.isUsePageing = isUsePageing;
+	}
+
+
 	public int getPageNo() {
 		return pageNo;
 	}

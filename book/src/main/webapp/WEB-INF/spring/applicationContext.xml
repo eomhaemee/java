@@ -56,4 +56,12 @@
 	<property name="publisherService" ref="publisherServiceImpl"/>
 </bean>
 
+<bean id="authorController" class="com.naver.book.author.web.AuthorController">
+	<property name="authorService" ref="authorServiceImpl"/>
+</bean>
+
+<bean id="bookController" class="com.naver.book.book.web.BookController">
+	<property name="bookService" ref="bookServiceImpl"/>
+</bean>
+
 </beans>

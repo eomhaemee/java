@@ -5,10 +5,13 @@
 		<typeAliases>
 			<typeAlias type="com.naver.book.publisher.vo.PublisherVO" alias="PublisherVO"/>
 			<typeAlias type="com.naver.book.publisher.vo.PublisherSearchVO" alias="PublisherSearchVO"/>
+			<typeAlias type="com.naver.book.author.vo.AuthorVO" alias="AuthorVO"/>
+			<typeAlias type="com.naver.book.author.vo.AuthorSearchVO" alias="AuthorSearchVO"/>
 		</typeAliases>
 		<mappers>
 			<!-- Paging관련 쿼리들이 있는 mapper -->
 			<mapper resource="commonDaoSql.xml"/>
 			<mapper resource="com/naver/book/publisher/dao/sql/publisherDaoSql.xml"/>
+			<mapper resource="com/naver/book/author/dao/sql/authorDaoSql.xml"/>
 		</mappers>
 	</configuration>

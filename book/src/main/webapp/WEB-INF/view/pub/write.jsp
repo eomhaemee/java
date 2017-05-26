@@ -40,8 +40,8 @@
 		<a class="navbar-brand" href="#">Book Store</a>
 		<ul class="nav navbar-nav">
 			<li class="active"><a href="<c:url value="/pub/write"/>">출판사 등록</a></li>
-			<li><a href="<c:url value="/author/write"/>">출판사 등록</a></li>
-			<li><a href="<c:url value="/book/write"/>">출판사 등록</a></li>
+			<li><a href="<c:url value="/author/write"/>">작가 등록</a></li>
+			<li><a href="<c:url value="/book/write"/>">책 등록</a></li>
 			
 		</ul>
 	</div>	

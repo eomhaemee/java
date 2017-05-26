@@ -13,12 +13,19 @@
 						)
 	</insert>
 	<select id="selectAllPublichser" parameterType="PublisherSearchVO" resultType="PublisherVO">
-		<include refid="CommonDao.PAGING_HEADER"/>
+		<if test="isUsePageing ==true ">
+			<include refid="CommonDao.PAGING_HEADER"/>
+		</if>
 		SELECT	PBLSHR_ID publisherId
 				,PBLSHR_NM publisherName
 		FROM	PBLSHR
+		<if test="isUsePageing ==false ">
+		ORDER BY PBLSHR_NM ASC 
+		</if>
+		<if test="isUsePageing ==true ">
 		ORDER BY PBLSHR_ID DESC 
-		<include refid="CommonDao.PAGING_FOOTER"/>
+			<include refid="CommonDao.PAGING_FOOTER"/>
+		</if>
 	</select>
 	<select id="selectAllPublichserCount" parameterType="PublisherSearchVO" resultType="_int">
 		SELECT	COUNT(1)
